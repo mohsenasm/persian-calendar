@@ -18,6 +18,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
 import android.os.Build
+import android.os.SystemClock
 import android.view.View
 import android.widget.RemoteViews
 import android.widget.Toast
@@ -109,6 +110,8 @@ import io.github.persiancalendar.calendar.AbstractDate
 import io.github.persiancalendar.praytimes.PrayTimes
 import java.util.Date
 import java.util.GregorianCalendar
+import java.util.TimeZone
+import kotlin.math.abs
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -628,6 +631,26 @@ private fun create2x2RemoteViews(
             if (isCenterAlignWidgets) R.layout.widget2x2_center else R.layout.widget2x2
         }
     )
+
+    if (isWidgetClock && isCenterAlignWidgets) {
+        val startTime: Long = SystemClock.elapsedRealtime()
+
+        val calendar = GregorianCalendar()
+        calendar.timeZone = TimeZone.getTimeZone("Asia/Tehran")
+        val h = calendar.get(GregorianCalendar.HOUR_OF_DAY)
+        val m = calendar.get(GregorianCalendar.MINUTE)
+        val s = calendar.get(GregorianCalendar.SECOND)
+        val ms = calendar.get(GregorianCalendar.MILLISECOND)
+        var all = ms + 1000*s + 1000*60*m + 1000*60*60*h
+        val offset = (calendar.timeZone.getOffset(calendar.time.time) / (60 * 60 * 1000.0))
+        if (abs(offset - 4.5) < 0.00001) {
+            all -= 1000 * 60 * 60 * 1
+        }
+
+        remoteViews.setChronometer(R.id.chronometer_2x2, startTime-all,null,true)
+        remoteViews.setChronometerCountDown(R.id.chronometer_2x2,false)
+    }
+
     if (isWidgetClock) remoteViews.configureClock(R.id.time_2x2)
     remoteViews.setRoundBackground(R.id.widget_layout2x2_background, width, height)
     remoteViews.setDirection(R.id.widget_layout2x2, context.resources)
