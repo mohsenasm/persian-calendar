@@ -38,6 +38,16 @@
                 android:fontFamily="sans-serif"
                 android:gravity="start"
                 android:textAlignment="viewStart"
+                android:textSize="36dp"
+                android:visibility="gone" />
+
+            <Chronometer
+                android:id="@+id/chronometer_2x2"
+                style="@style/WidgetTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
                 android:textSize="36dp" />
 
             <TextView

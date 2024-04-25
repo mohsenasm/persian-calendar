@@ -41,7 +41,19 @@
                 android:gravity="end|center_vertical"
                 android:maxLines="1"
                 android:textAlignment="viewEnd"
-                android:textSize="48sp" />
+                android:textSize="48sp"
+                android:visibility="gone" />
+
+            <Chronometer
+                android:id="@+id/chronometer_2x2"
+                style="@style/WidgetTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textSize="50sp" />
 
             <FrameLayout
                 android:layout_width="1dp"
